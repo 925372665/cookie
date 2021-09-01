@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>考题三</title>
+</head>
+<style>
+    *{
+        margin: 0;padding: 0;
+    }
+    .odiv{
+        width: 1000px;
+        height: 600px;
+        margin: 0 auto;
+        padding-left: 10px;
+        background-color: #e6e6e6;
+        position: relative;
+    }
+    .box{
+        width: 900px;
+        overflow: hidden;
+    }
+    .xin-box{
+        width: 100%;
+        overflow: hidden;
+        line-height: 70px;
+        background-color: #ccc;
+    }
+    .use{
+        width: 90px;
+        height: 70px;
+        float: left;
+        margin-left: 10px;
+    }
+    .you{
+        width: 300px;
+        height: 70px;
+        float: left;
+        margin-left: 10px;
+    }
+    .pas{
+        width: 300px;
+        height: 70px;
+        float: left;
+    }
+
+    .xinx-box{
+        width: 897px;
+        overflow: hidden;
+        line-height: 70px;
+        border: 1px #ccc solid;
+    }
+    .username{
+        width: 90px;
+        height: 70px;
+        float: left;
+        border-right: 1px #ccc solid;
+    }
+    .youx{
+        width: 300px;
+        height: 70px;
+        float: left;
+        border-right: 1px #ccc solid;
+    }
+    .password{
+        width: 300px;
+        height: 70px;
+        float: left;
+    }
+    .btn{
+        width: 120px;
+        height: 50px;
+        margin-top: 20px;
+        font-size: 20px;
+    }
+    /* 定位页面 */
+    .creat-box{
+        width: 450px;
+        height: 380px;
+        position: absolute;
+        top: 0;
+        left: 550px;
+        border: 1px #ccc solid;
+        background-color: #fff;
+        display: none;
+    }
+    h3{
+        height: 50px;
+        line-height: 50px;
+        background-color:#e9e9e9 ;
+    }
+    .creat{
+        width: 100%;
+        height: 240px;
+        border-bottom: 1px #ccc solid;
+    }
+    .creat input{
+        width: 400px;
+        height: 40px;
+        border: 1px #ccc solid;
+        margin-left: 20px;
+        margin-top: 20px;
+        outline: none;
+        text-indent: 10px;
+    }
+    .cj{
+        width: 60px;
+        height: 40px;
+        margin-top: 20px;
+        margin-left: 250px;
+    }
+    .qx{
+        width: 60px;
+        height: 40px;
+        margin-top: 20px;
+        margin-left: 20px;
+    }
+</style>
+<body>
+    <div class="odiv">
+        <h2>用户信息</h2>
+        <div class="box">
+            <div class="xin-box">
+                <div class="use"><b>用户</b></div>
+                <div class="you"><b>邮箱</b></div>
+                <div class="pas"><b>密码</b></div>
+            </div>
+            <div class="xinx-box">
+                <div class="username">lyshfsds</div>
+                <div class="youx">925373220@qq.com</div>
+                <div class="password">123123123</div>
+            </div>
+        </div>
+        <button class="btn">创建用户</button>
+        <div class="creat-box">
+            <h3>创建新用户</h3>
+            <div class="creat">
+                <input name="username" type="text" placeholder="用户名">
+                <input name="youx" type="text" placeholder="邮箱">
+                <input name="password" type="text" placeholder="密码">
+            </div>
+            <button class="cj">创建</button>
+            <button class="qx">取消</button>
+        </div>
+    </div>
+</body>
+<script src="js/common.js"></script>
+<script>
+    var odiv=$('.odiv')
+    var box = $('.box')
+    var btn=$('.btn')
+    var creat_box=$('.creat-box') //创建页面
+    var qx=$('.qx')    //取消
+    btn.onclick=function(){
+        creat_box.style.display='block'
+    }
+    qx.onclick=function(){
+        creat_box.style.display='none'
+    }
+    console.log(creat_box)
+    function move(){
+        var dx,dy;
+        creat_box.onmousedown=function(e){
+            dx=e.clientX-creat_box.offsetLeft
+            dy=e.clientY-creat_box.offsetTop
+            creat_box.onmousemove=function(e){
+                var max_x=odiv.offsetWidth-creat_box.offsetWidth
+                var max_y=odiv.offsetHeight-creat_box.offsetHeight
+                creat_box.style.left=e.clientX-dx+'px'
+                creat_box.style.top=e.clientY-dy+'px'
+                if(creat_box.offsetLeft<0){
+                    creat_box.style.left=0
+                }
+                if(creat_box.offsetTop<0){
+                    creat_box.style.top=0
+                }
+                if(creat_box.offsetLeft>max_x){
+                    creat_box.style.left=max_x+'px'
+                }
+                if(creat_box.offsetTop>max_y){
+                    creat_box.style.top=max_y+'px'
+                }
+            }
+            creat_box.onmouseup=function(e){
+                creat_box.onmousemove=null
+            }
+        }
+    }
+    move()
+    var cj=$('.cj')
+    function creat(){
+        
+        cj.onclick=function(){
+            // 用户名的验证规则(6到18位，大小写字母和数字)，密码的验证规则(3到12位，大小写字母和数字)，邮箱的验证规则(@前面是6到12位数字小写英文，@后面是2到10位数字和小写英文，点后面包括com、net、org)，
+            var arr=  []
+            var username=/^[\da-z]{6,18}$/i
+            var youx=/^[\da-z]{6,12}@[\da-z]{2,10}\.(com|net|org)$/
+            var password=/^[\da-z]{3,12}$/i
+            var flag =false
+            //如果用户名、密码、邮箱都验证成功，ture 执行下一步
+            if(username.test($('[name=username]').value)&&youx.test($('[name=youx]').value)&&password.test($('[name=password]').value)){
+                flag=true
+            }else{
+                alert('请输入格式正确的用户名、密码或邮箱')
+            }
+            //添加用户名、邮箱、密码
+            if(flag){
+                var xinx_box =document.createElement('div')
+                xinx_box.className='xinx-box'
+                arr.push(`
+                    <div class="username">${$('[name=username]').value}</div>
+                    <div class="youx">${$('[name=youx]').value}</div>
+                    <div class="password">${$('[name=password]').value}</div>
+                `)
+                xinx_box.innerHTML=arr.join('')
+                box.appendChild(xinx_box)
+                creat_box.style.display='none'
+            }
+        }
+    }
+    creat()
+    console.log(odiv.childNodes)
+</script>
+</html>

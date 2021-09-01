@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>考题一</title>
+</head>
+<style>
+    .odiv{
+        width: 1000px;
+        height: 500px;
+        margin: 0 auto;
+        position: relative;
+    }
+    .small-box{
+        width: 430px;
+        height: 430px;
+        border: 1px #ccc solid;
+    }
+    .float-box{
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(76, 0, 255, 0.5);
+        display: none;
+    }
+    .big-box{
+        width: 430px;
+        height: 430px;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        left: 500px;
+        border: 1px #ccc solid;
+        display: none;
+    }
+    .big-box img{
+        width: 860px;
+        height: 860px;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .bom{
+        width: 1000px;
+        height: 60px;
+        margin: 0 auto;
+    }
+    .bom img{
+        margin-left: 20px;
+    }
+    .on{
+        border: 2px #000 solid !important;
+    }
+</style>
+<body>
+    <div class="odiv">
+        <div class="small-box">
+            <div class="float-box"></div>
+            <img src="img/big_1.jpg">
+        </div>
+        <div class="big-box">
+            <img src="img/big_1.jpg">
+        </div>
+    </div>
+    <div class="bom">
+        <img class="on" src="img/small_1.jpg">
+        <img src="img/small_2.jpg">
+        <img src="img/small_3.jpg">
+        <img src="img/small_4.jpg">
+        <img src="img/small_5.jpg">
+    </div>
+</body>
+<script src="js/common.js"></script>
+<script>
+    var odiv=$('.odiv')
+    var small_box=$('.small-box')
+    var small_img=$('.small-box img')
+    var float_box=$('.float-box')
+    var big_box=$('.big-box')
+    var big_box_img=$('.big-box img')
+    var bom_img=_('.bom img')
+    var arr_img=["img/big_1.jpg","img/big_2.jpg","img/big_3.jpg","img/big_4.png","img/big_5.jpg"]
+    var index=0
+    //tab切换
+    for(var i = 0;i<bom_img.length;i++){
+        bom_img[i].xiab=i
+        bom_img[i].onmouseover=function(){
+            index=this.xiab
+            $('img.on').classList.remove('on');
+            this.classList.add('on')
+            small_img.src=arr_img[index]
+            big_box_img.src=arr_img[index]
+        }
+    }
+
+    //放大镜
+    function move(){
+        var dx,dy,px,py;
+        small_box.onmouseover=function(){
+            float_box.style.display='block'
+            big_box.style.display='block'
+        }
+        small_box.onmousemove=function(e){
+            var max_x=small_box.offsetWidth-float_box.offsetWidth
+            var max_y=small_box.offsetHeight-float_box.offsetHeight
+            dx=e.clientX-odiv.offsetLeft-float_box.offsetWidth/2
+            dy=e.clientY-odiv.offsetTop-float_box.offsetHeight/2
+            if(dx<0){
+                dx=0
+            }
+            if(dy<0){
+                dy=0
+            }
+            if(dx>max_x){
+                dx=max_x
+            }
+            if(dy>max_y){
+                dy=max_y
+            }
+            float_box.style.left=dx+'px';
+            float_box.style.top=dy+'px'
+            px=dx/max_x
+            py=dy/max_y
+            big_box_img.style.left=-px*(big_box_img.offsetWidth-big_box.offsetWidth)+'px'
+            big_box_img.style.top=-py*(big_box_img.offsetHeight-big_box.offsetHeight)+'px'
+        }
+        small_box.onmouseout=function(){
+            float_box.style.display='none'
+            big_box.style.display='none'
+        }
+    }
+    move()
+</script>
+</html>

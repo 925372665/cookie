@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>考题二</title>
+</head>
+<style>
+    *{
+        margin: 0;padding: 0;
+    }
+    .odiv{
+        width: 1000px;
+        overflow: hidden;
+        border: 1px #ccc solid;
+        margin: 20px auto;
+        padding-left: 20px;
+        padding-top: 20px;
+    }
+    .box{
+        width: 1000px;
+        overflow: hidden;
+    }
+    .jing-box{
+        width: 500px;
+        height: 100px;
+        float: left;
+    }
+    .jing-box span{
+        float: left;
+        line-height: 100px;
+        width: 280px;
+        height: 100px;
+    }
+    .jing-box img{
+        margin-top: 20px;
+        margin-right: 40px;
+        float: left;
+    }
+    .jing-box div{
+        line-height: 100px;
+        float: left;
+    }
+</style>
+<body>
+    <div class="odiv">
+        <h2>热门景点天气</h2>
+        <div class="box">
+            <div class="jing-box">
+                <span>北京首都国际机场</span>
+                <img src="img/n04.png">
+                <div>31</div>
+                <div>-</div>
+                <div>24</div>
+            </div>
+            <div class="jing-box">
+                <span>北京首都国际机场</span>
+                <img src="img/n04.png">
+                <div>31</div>
+                <div>-</div>
+                <div>24</div>
+            </div>
+            
+        </div>
+    </div>
+</body>
+<script src="js/common.js"></script>
+<script>
+    var box=$('.box')
+    
+    //调用数据
+    ajax('data/data.json',function(msg){
+        var list=msg.data.relatedArea
+        var arr = []
+        console.log(list)
+        for(var i = 0;i<list.length;i++){
+            arr.push(`
+            <div class="jing-box">
+                <span>${list[i].namecn}</span>
+                <img src="img/${list[i].weather_am_pic}.png">
+                <div>${list[i].temperature_am}</div>
+                <div>-</div>
+                <div>${list[i].temperature_pm}</div>
+            </div>
+            `)
+        }
+        //转成字符串，添加给box
+        box.innerHTML=arr.join('')
+    })
+</script>
+</html>
